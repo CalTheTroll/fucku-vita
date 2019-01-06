@@ -1,55 +1,44 @@
-#include <string.h>
 #include <stdio.h>
+#include <psp2/ctrl.h>
+#include "debugScreen.h"
 
-#include <switch.h>
+#define printf psvDebugScreenPrintf
 
-int main(int argc, char **argv)
-{
-    gfxInitDefault();
+int main(int argc, char *argv[]) {
 
-    //Initialize console. Using NULL as the second argument tells the console library to use the internal console structure as current one.
-    consoleInit(NULL);
+SceCtrlData pad;
+uint32_t old_buttons, current_buttons, pressed_buttons;
+int enter_button;
+int sel;
 
-    //Move the cursor to row 16 and column 20 and then prints "Hello World!"
-    //To move the cursor you have to print "\x1b[r;cH", where r and c are respectively
-    //the row and column where you want your cursor to move
-    printf("Heres a handy guide! Pressing A will say 'Fuck you.', pressing B will say 'Bitch', pressing X will say 'Shut up' and pressing Y will clear the screen (including this guide) ");
-	
-	while(appletMainLoop())
-    {
-        //Scan all the inputs. This should be done once for each frame
-        hidScanInput();
+psvDebugScreenInit();
+psvDebugScreenSetFgColor(COLOR_WHITE);
 
-        //hidKeysDown returns information about which buttons have been just pressed (and they weren't in the previous frame)
-        u64 kDown = hidKeysDown(CONTROLLER_P1_AUTO);
-		if(kDown & KEY_B)
-		{
-			printf(" Bitch.");
-		}
+sel = 0;
+old_buttons = 0, current_buttons = 0, pressed_buttons = 0;
 
-		if(kDown & KEY_X)
-		{
-			printf(" Shut up.");
-		}
-		
-		if(kDown & KEY_Y)
-		{
-		consoleClear();
 
-		}
-		
-		if(kDown & KEY_A)
-		{
-			printf(" Fuck you.");
-		}
-		
-        if (kDown & KEY_PLUS) break; // break in order to return to hbmenu
-		
-        gfxFlushBuffers();
-        gfxSwapBuffers();
-        gfxWaitForVsync();
-    }
+printf("Heres a handy guide!\n"); 
+printf("Pressing CROSS will say 'Fuck you.'\n");
+printf("Pressing TRIANGLE will say 'Bitch.'\n");
+printf("Pressing SQUARE will say 'Shut up.'\n");
+printf("Pressing CIRCLE will clear the screen (including this guide)\n");
 
-    gfxExit();
-    return 0;
+  while (1) {
+    sceCtrlPeekBufferPositive(0, &pad, 1);
+
+    old_buttons = current_buttons;
+    current_buttons = pad.buttons;
+    pressed_buttons = current_buttons & ~old_buttons;
+
+   if (pressed_buttons & SCE_CTRL_CROSS) { printf("Fuck you.\n"); }
+   if (pressed_buttons & SCE_CTRL_TRIANGLE) { printf("Bitch.\n"); }
+   if (pressed_buttons & SCE_CTRL_SQUARE) { printf("Shut up.\n"); }
+   if (pressed_buttons & SCE_CTRL_CIRCLE) { psvDebugScreenClear(0x00000000); }
+
+   sel = 0;
+   sceKernelDelayThread(10 * 1000);
+  }
+
 }
+
