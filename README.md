@@ -1,4 +1,5 @@
 # fucku
+
 A homebrew that says "Fuck you." on the screen of your PS Vita.
 
 A fork of https://github.com/lolicop123/fuck-u
