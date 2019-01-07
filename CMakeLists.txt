@@ -21,13 +21,13 @@ set(CMAKE_CXX_COMPILER "arm-vita-eabi-g++")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu11")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-add_executable(${PROJECT_NAME}
+add_executable(${PROJECT_NAME}.elf
   main.c
   debugScreen.c
   debugScreenFont.c
 )
 
-target_link_libraries(${PROJECT_NAME}
+target_link_libraries(${PROJECT_NAME}.elf
   SceDisplay_stub
   SceCtrl_stub
 )
