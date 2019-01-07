@@ -32,8 +32,13 @@ target_link_libraries(${PROJECT_NAME}
   SceCtrl_stub
 )
 
-vita_create_self(${PROJECT_NAME}.self ${PROJECT_NAME})
-vita_create_vpk(${PROJECT_NAME}.vpk ${TITLE_ID} ${PROJECT_NAME}.self
+vita_create_self(eboot.bin ${PROJECT_NAME}.elf)
+vita_create_vpk(${PROJECT_NAME}.vpk ${TITLE_ID} eboot.bin
   VERSION ${VITA_VERSION}
   NAME ${PROJECT_TITLE}
+  FILE ${CMAKE_SOURCE_DIR}/sce_sys/icon0.png sce_sys/icon0.png
+  FILE ${CMAKE_SOURCE_DIR}/sce_sys/livearea/contents/bg.png sce_sys/livearea/contents/bg0.png
+  FILE ${CMAKE_SOURCE_DIR}/sce_sys/livearea/contents/pic0.png sce_sys/pic0.png
+  FILE ${CMAKE_SOURCE_DIR}/sce_sys/livearea/contents/template.xml sce_sys/livearea/contents/template.xml
 )
+
