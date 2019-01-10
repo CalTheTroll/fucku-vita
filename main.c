@@ -19,7 +19,9 @@ old_buttons = 0, current_buttons = 0, pressed_buttons = 0;
 
 
 printf("Heres a handy guide!\n"); 
-printf("Pressing CROSS will say 'Fuck you.'\n");
+printf("Pressing CROSS will say 'Fuck you.'\n"); 
+printf("Pressing R TRIGGER will say 'motherfucker.'\n");
+printf("Pressing L TRIGGER will say 'You Fucking wanker.'\n");
 printf("Pressing TRIANGLE will say 'Bitch.'\n");
 printf("Pressing SQUARE will say 'Shut up.'\n");
 printf("Pressing CIRCLE will clear the screen (including this guide)\n");
@@ -32,6 +34,8 @@ printf("Pressing CIRCLE will clear the screen (including this guide)\n");
     pressed_buttons = current_buttons & ~old_buttons;
 
    if (pressed_buttons & SCE_CTRL_CROSS) { printf("Fuck you.\n"); }
+   if (pressed_buttons & SCE_CTRL_LTRIGGER) { printf("You Fucking wanker.\n"); }
+   if (pressed_buttons & SCE_CTRL_RTRIGGER) { printf("motherfucker.\n"); }
    if (pressed_buttons & SCE_CTRL_TRIANGLE) { printf("Bitch.\n"); }
    if (pressed_buttons & SCE_CTRL_SQUARE) { printf("Shut up.\n"); }
    if (pressed_buttons & SCE_CTRL_CIRCLE) { psvDebugScreenClear(0x00000000); }
